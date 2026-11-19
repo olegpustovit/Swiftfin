@@ -26,6 +26,10 @@ final class AVMediaPlayer: NSObject, MediaPlayer, MediaPlayerMetadataProviding {
     }
 
     let displayTitle = MediaPlayerType.avPlayer.displayTitle
+    /// When a system playback interface (`AVPlayerViewController`) drives the player directly,
+    /// play/pause changes made by that interface must be reported back to the media session.
+    @ObservationIgnored
+    var forwardsPlaybackRequests = false
     private(set) var isPiPActive: Bool = false
     private(set) var isPiPAvailable: Bool = false
     private(set) var isPiPTransitioning = false
@@ -132,7 +136,10 @@ final class AVMediaPlayer: NSObject, MediaPlayer, MediaPlayerMetadataProviding {
         guard isReady else { return }
 
         pendingPlaybackStatus = .playing
-        player.rate = Float(mediaSession?.rate ?? 1)
+        let rate = Float(mediaSession?.effectiveRate ?? 1)
+        // System playback controls resume at `defaultRate`.
+        player.defaultRate = rate
+        player.rate = rate
     }
 
     func pause() {
@@ -175,6 +182,8 @@ final class AVMediaPlayer: NSObject, MediaPlayer, MediaPlayerMetadataProviding {
     }
 
     func setRate(_ rate: Double) {
+        player.defaultRate = Float(rate)
+
         guard isReady, player.rate != 0 else { return }
 
         player.rate = Float(rate)
@@ -299,7 +308,7 @@ extension AVMediaPlayer {
 
                     self.pendingPlaybackStatus = nil
 
-                    if self.isPiPActive || self.player.isExternalPlaybackActive {
+                    if self.forwardsPlaybackRequests || self.isPiPActive || self.player.isExternalPlaybackActive {
                         self.mediaSession?.playerDidRequestPlayback(observed, from: self)
                     }
                 }
@@ -448,6 +457,9 @@ extension AVMediaPlayer {
 
         if mediaSession?.playbackRequestStatus == .playing {
             play()
+        } else if forwardsPlaybackRequests, player.timeControlStatus == .playing {
+            // A system interface started playback while the item was still preparing.
+            mediaSession?.playerDidRequestPlayback(.playing, from: self)
         }
     }
 

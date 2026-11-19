@@ -1132,6 +1132,10 @@ internal enum L10n {
   internal static let nameRequired = L10n.tr("Localizable", "nameRequired", fallback: "A name is required")
   /// Narrator
   internal static let narrator = L10n.tr("Localizable", "narrator", fallback: "Narrator")
+  /// Native player interface
+  internal static let nativePlayerInterface = L10n.tr("Localizable", "nativePlayerInterface", fallback: "Native player interface")
+  /// Use the Apple TV system player controls, info panel, and menus. Requires the AVPlayer engine.
+  internal static let nativePlayerInterfaceDescription = L10n.tr("Localizable", "nativePlayerInterfaceDescription", fallback: "Use the Apple TV system player controls, info panel, and menus. Requires the AVPlayer engine.")
   /// Network
   internal static let network = L10n.tr("Localizable", "network", fallback: "Network")
   /// Network timed out
@@ -1152,6 +1156,8 @@ internal enum L10n {
   internal static let next = L10n.tr("Localizable", "next", fallback: "Next")
   /// Next chapter
   internal static let nextChapter = L10n.tr("Localizable", "nextChapter", fallback: "Next chapter")
+  /// Next Episode
+  internal static let nextEpisode = L10n.tr("Localizable", "nextEpisode", fallback: "Next Episode")
   /// Next item
   internal static let nextItem = L10n.tr("Localizable", "nextItem", fallback: "Next item")
   /// Next Up
@@ -1188,6 +1194,8 @@ internal enum L10n {
   internal static let noRuntimeLimit = L10n.tr("Localizable", "noRuntimeLimit", fallback: "No runtime limit")
   /// Not supported
   internal static let notSupported = L10n.tr("Localizable", "notSupported", fallback: "Not supported")
+  /// Now Playing
+  internal static let nowPlaying = L10n.tr("Localizable", "nowPlaying", fallback: "Now Playing")
   /// Off
   internal static let off = L10n.tr("Localizable", "off", fallback: "Off")
   /// Official rating
@@ -1756,8 +1764,12 @@ internal enum L10n {
   internal static let size = L10n.tr("Localizable", "size", fallback: "Size")
   /// Skip
   internal static let skip = L10n.tr("Localizable", "skip", fallback: "Skip")
+  /// Skip Credits
+  internal static let skipCredits = L10n.tr("Localizable", "skipCredits", fallback: "Skip Credits")
   /// Skip duplicates
   internal static let skipDuplicates = L10n.tr("Localizable", "skipDuplicates", fallback: "Skip duplicates")
+  /// Skip Intro
+  internal static let skipIntro = L10n.tr("Localizable", "skipIntro", fallback: "Skip Intro")
   /// Sleeps at %1$@
   internal static func sleepsAtTime(_ p1: Any) -> String {
     return L10n.tr("Localizable", "sleepsAtTime", String(describing: p1), fallback: "Sleeps at %1$@")

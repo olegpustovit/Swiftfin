@@ -503,6 +503,9 @@ final class MediaSession {
             return
         }
 
+        // The player reports a pause when the item reaches its end; autoplay should continue playing.
+        playbackRequestStatus = .playing
+
         if let next = queue.nextItem {
             playNewItem(intent: next)
             return

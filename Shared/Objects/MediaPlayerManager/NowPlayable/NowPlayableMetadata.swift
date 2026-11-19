@@ -84,11 +84,12 @@ struct NowPlayableStaticMetadata: Equatable {
             return item.copy() as? AVMetadataItem
         }
 
-        if let data = image?.pngData() {
+        // JPEG is much cheaper to encode than PNG for large posters and is what the system info panel expects.
+        if let data = image?.jpegData(compressionQuality: 0.85) {
             let item = AVMutableMetadataItem()
             item.identifier = .commonIdentifierArtwork
             item.value = data as NSData
-            item.dataType = kCMMetadataBaseDataType_PNG as String
+            item.dataType = kCMMetadataBaseDataType_JPEG as String
             item.extendedLanguageTag = "und"
             result.append(item)
         }

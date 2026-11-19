@@ -65,6 +65,30 @@ extension UIDevice {
             VTIsHardwareDecodeSupported(kCMVideoCodecType_VP9)
         }
 
+        // MARK: - Software Decode
+
+        /// The hardware model identifier, for example `AppleTV11,1`.
+        static let modelIdentifier: String = {
+            var systemInfo = utsname()
+            uname(&systemInfo)
+
+            return withUnsafeBytes(of: &systemInfo.machine) { buffer in
+                String(decoding: buffer.prefix { $0 != 0 }, as: UTF8.self)
+            }
+        }()
+
+        /// Indicates mpv can decode Dolby TrueHD in real time.
+        ///
+        /// - Note: The A8 (Apple TV HD) and A10X (Apple TV 4K 1st generation) stall on TrueHD Atmos,
+        ///   so the server is asked to transcode it there instead.
+        static var supportsTrueHDSoftwareDecode: Bool {
+            #if os(tvOS)
+            !["AppleTV5,3", "AppleTV6,2"].contains(modelIdentifier)
+            #else
+            true
+            #endif
+        }
+
         // MARK: - HDR
 
         /// Indicates the device can play HDR10 content.

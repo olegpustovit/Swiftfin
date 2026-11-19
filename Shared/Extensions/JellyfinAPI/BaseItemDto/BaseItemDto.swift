@@ -71,7 +71,7 @@ extension BaseItemDto {
             artwork: image.map { image in MPMediaItemArtwork(boundsSize: image.size) { _ in image }},
             albumArtist: isAudio ? content.albumArtist?.nilIfBlank ?? joined((content.albumArtists ?? []).map(\.name)) : nil,
             albumTitle: isAudio ? content.album?.nilIfBlank : nil,
-            overview: content.overview?.nilIfBlank ?? overview?.nilIfBlank,
+            overview: content.plainOverview?.nilIfBlank ?? plainOverview?.nilIfBlank,
             contentRating: content.officialRating?.nilIfBlank ?? officialRating?.nilIfBlank,
             genre: joined((content.genres ?? genres ?? []).map(Optional.some))
         )

@@ -31,7 +31,7 @@ struct ItemOverviewView: View {
                         .multilineTextAlignment(.leading)
                 }
 
-                if let itemOverview = item.overview {
+                if let itemOverview = item.attributedOverview {
                     Text(itemOverview)
                         .font(.body)
                         .multilineTextAlignment(.leading)

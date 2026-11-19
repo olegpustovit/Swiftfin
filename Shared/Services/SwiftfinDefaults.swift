@@ -287,7 +287,17 @@ extension Defaults.Keys {
         }
 
         static var mediaPlayerType: Key<MediaPlayerType> {
+            #if os(tvOS)
+            // AVPlayer powers the native Apple TV playback interface.
+            UserKey("videoPlayerType", default: .avPlayer)
+            #else
             UserKey("videoPlayerType", default: .mpv)
+            #endif
+        }
+
+        /// Use the system `AVPlayerViewController` interface on tvOS when the AVPlayer engine is selected.
+        static var nativeInterface: Key<Bool> {
+            UserKey("videoPlayerNativeInterface", default: true)
         }
 
         enum Gesture {

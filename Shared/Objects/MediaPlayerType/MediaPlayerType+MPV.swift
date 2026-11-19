@@ -92,7 +92,9 @@ extension MediaPlayerType {
             AudioCodec.flac
             AudioCodec.mp3
             AudioCodec.opus
-            AudioCodec.truehd
+            if UIDevice.PlaybackCapabilities.supportsTrueHDSoftwareDecode {
+                AudioCodec.truehd
+            }
         } videoCodecs: {
             // - Note: Transcode Profiles prioritizes codecs by order
             // This is possible with non-AV1 supported devices but the FPS is terrible on some devices
@@ -337,7 +339,10 @@ extension MediaPlayerType {
         AudioCodec.pcm_s24be
         AudioCodec.pcm_s24le
         AudioCodec.pcm_u8
-        AudioCodec.truehd
+        if UIDevice.PlaybackCapabilities.supportsTrueHDSoftwareDecode {
+            AudioCodec.truehd
+        }
+
         AudioCodec.vorbis
         AudioCodec.wmalossless
         AudioCodec.wmapro

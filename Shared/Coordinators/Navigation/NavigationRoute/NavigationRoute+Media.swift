@@ -52,8 +52,13 @@ extension NavigationRoute {
             id: "videoPlayer",
             style: .fullscreen
         ) {
+            #if os(tvOS)
+            TVVideoPlayerRoute(mediaSession: session)
+                .id(session.id)
+            #else
             VideoPlayer(mediaSession: session)
                 .id(session.id)
+            #endif
         }
     }
 }

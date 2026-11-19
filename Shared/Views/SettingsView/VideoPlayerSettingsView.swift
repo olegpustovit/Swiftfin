@@ -21,6 +21,8 @@ struct VideoPlayerSettingsView: View {
 
     @Default(.VideoPlayer.mediaPlayerType)
     private var mediaPlayerType
+    @Default(.VideoPlayer.nativeInterface)
+    private var nativeInterface
 
     // MARK: - Button Defaults
 
@@ -133,6 +135,15 @@ struct VideoPlayerSettingsView: View {
     private var playbackSettings: some View {
         Section(L10n.playback) {
             PlatformPicker(L10n.player, selection: $mediaPlayerType)
+
+            #if os(tvOS)
+            if mediaPlayerType == .avPlayer {
+                Toggle(isOn: $nativeInterface) {
+                    Text(L10n.nativePlayerInterface)
+                    Text(L10n.nativePlayerInterfaceDescription)
+                }
+            }
+            #endif
 
             ChevronButton(L10n.playbackQuality) {
                 router.route(to: .playbackQualitySettings)

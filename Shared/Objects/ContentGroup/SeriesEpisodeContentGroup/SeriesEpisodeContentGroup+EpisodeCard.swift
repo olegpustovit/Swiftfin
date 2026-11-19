@@ -29,7 +29,7 @@ extension SeriesEpisodeContentGroup {
             if episode.isUnaired {
                 episode.airDateLabel ?? L10n.noOverviewAvailable
             } else {
-                episode.overview ?? L10n.noOverviewAvailable
+                episode.plainOverview ?? L10n.noOverviewAvailable
             }
         }
 
