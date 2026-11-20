@@ -44,8 +44,12 @@ test: server ## Run NativePlaybackTests (UI tests) in the simulator against the 
 		2>&1 | tee .build/test.log | grep -E "error:|Test Case .*(passed|failed)|\*\* TEST"
 
 .PHONY: device
-device: ## Build, sign, and install on a paired Apple TV (needs XcodeConfig/DevelopmentTeam.xcconfig)
+device: ## Build, sign, and install on a paired Apple TV (pair it in Xcode first)
 	@Scripts/install-appletv.sh
+
+.PHONY: testflight
+testflight: ## Archive and upload a tvOS build to TestFlight (Xcode account or ASC_KEY_ID/ASC_ISSUER_ID)
+	@Scripts/testflight.sh
 
 .PHONY: server
 server: ## Start the Jellyfin test server (http://localhost:8096)

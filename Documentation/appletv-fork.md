@@ -64,16 +64,26 @@ In the app, connect to `http://localhost:8096` and sign in as `demo` (no passwor
 | `make run` | Start the server, build Debug, install and launch in the "Swiftfin Apple TV" simulator |
 | `make test` | Native player UI tests (`NativePlaybackTests`) |
 | `make device` | Build Release, sign, install, and launch on a paired Apple TV |
+| `make testflight` | Archive and upload a build to TestFlight |
 | `make server` / `server-stop` / `server-status` / `server-reset` | Manage the test server |
 | `make help` | List all commands |
 
 ## Installing on your Apple TV
 
-1. Create `XcodeConfig/DevelopmentTeam.xcconfig` (git-ignored) with your team and a unique bundle ID:
-   ```
-   DEVELOPMENT_TEAM = ABCDE12345
-   PRODUCT_BUNDLE_IDENTIFIER = com.example.swiftfin
-   ```
-2. On the Apple TV: Settings → Remotes and Devices → Remote App and Devices.
-3. In Xcode: Window → Devices and Simulators → pair the Apple TV (enter the code shown on the TV).
-4. Run `make device`.
+The fork builds as **SwiftfinX** (`com.olehpustovit.swiftfinx`, team `7ZH3FYV964`), set in `XcodeConfig/Shared.xcconfig`.
+To build under another team, create the git-ignored `XcodeConfig/DevelopmentTeam.xcconfig`:
+
+```
+DEVELOPMENT_TEAM = ABCDE12345
+PRODUCT_BUNDLE_IDENTIFIER = com.example.swiftfinx
+```
+
+1. On the Apple TV: Settings → Remotes and Devices → Remote App and Devices.
+2. In Xcode: Window → Devices and Simulators → pair the Apple TV (enter the code shown on the TV).
+3. Run `make device`.
+
+## TestFlight
+
+`make testflight` archives a Release build (build number = timestamp) and uploads it to App Store Connect.
+It signs in with the Apple ID in Xcode → Settings → Accounts, or an API key via `ASC_KEY_ID` + `ASC_ISSUER_ID`.
+The app record (tvOS, bundle ID `com.olehpustovit.swiftfinx`) must exist in App Store Connect.
