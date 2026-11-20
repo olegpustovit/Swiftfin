@@ -51,7 +51,7 @@ xcodebuild archive \
     -derivedDataPath "$ROOT/.build/DerivedData-archive" \
     -skipMacroValidation -skipPackagePluginValidation \
     "${auth[@]}" \
-    CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
+    CURRENT_PROJECT_VERSION="$BUILD_NUMBER" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO `# signed at export, so no registered device is needed` \
     >"$OUT/archive.log" 2>&1 || { grep -E ": error: |error:" "$OUT/archive.log" | tail -20; die "archive failed, see $OUT/archive.log"; }
 
 cat >"$OUT/ExportOptions.plist" <<EOF
@@ -71,7 +71,8 @@ cat >"$OUT/ExportOptions.plist" <<EOF
 EOF
 
 log "Uploading to App Store Connect"
-xcodebuild -exportArchive \
+# Xcode's packaging runs /usr/bin/rsync, which breaks if a Homebrew rsync 3.x is first on PATH.
+PATH="/usr/bin:/bin:/usr/sbin:/sbin" xcodebuild -exportArchive \
     -archivePath "$ARCHIVE" \
     -exportOptionsPlist "$OUT/ExportOptions.plist" \
     -exportPath "$OUT/export" \
