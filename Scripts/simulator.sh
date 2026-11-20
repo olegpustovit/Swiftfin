@@ -58,6 +58,19 @@ create() {
     xcrun simctl create "$SIM_NAME" "$SIM_DEVICE_TYPE" "$runtime"
 }
 
+# Simulator.app up to Xcode 26, DeviceHub.app from Xcode 27.
+open_simulator_ui() {
+    local xcode app
+    xcode="$(xcode-select -p)/.."
+    for app in "$xcode/Applications/DeviceHub.app" "$xcode/Developer/Applications/Simulator.app"; do
+        if [[ -d "$app" ]]; then
+            open -a "$app" --args -CurrentDeviceUDID "$1" && return
+        fi
+    done
+    open -b com.apple.iphonesimulator --args -CurrentDeviceUDID "$1" 2>/dev/null ||
+        log "Could not open the Simulator window, the simulator is still running headless"
+}
+
 run() {
     create
     local id app bundle_id
@@ -65,7 +78,7 @@ run() {
 
     log "Booting simulator \"$SIM_NAME\""
     xcrun simctl boot "$id" 2>/dev/null || true
-    open -a Simulator --args -CurrentDeviceUDID "$id"
+    open_simulator_ui "$id"
 
     log "Building Swiftfin tvOS ($CONFIGURATION)"
     set -o pipefail
@@ -77,7 +90,7 @@ run() {
         -derivedDataPath "$DERIVED" \
         -skipMacroValidation \
         -skipPackagePluginValidation \
-        build 2>&1 | tee "$ROOT/.build/build.log" | grep -E "error:|\*\* BUILD" || true
+        build 2>&1 | tee "$ROOT/.build/build.log" | grep -E ": error: |\*\* BUILD" || true
     grep -q "\*\* BUILD SUCCEEDED" "$ROOT/.build/build.log" || die "build failed, see .build/build.log"
 
     app="$DERIVED/Build/Products/$CONFIGURATION-appletvsimulator/Swiftfin.app"

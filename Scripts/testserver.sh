@@ -210,7 +210,6 @@ EOF
             -map 0:v -map 1:a -map 2 \
             -c:v libx264 -preset veryfast -crf 30 -pix_fmt yuv420p \
             -c:a aac -b:a 96k -c:s srt \
-            -metadata title="Episode $episode" \
             -metadata:s:a:0 language=eng -metadata:s:s:0 language=eng \
             "$media/Shows/Test Show/Season 01/Test Show S01E0$episode.mkv"
     done
@@ -276,7 +275,7 @@ status() {
 api() {
     local method="$1" path="$2" body="${3:-}" auth="$AUTH_HEADER"
     if [[ -f "$DIR/token.txt" ]]; then auth="$auth, Token=\"$(cat "$DIR/token.txt")\""; fi
-    curl -fsS -X "$method" "$URL$path" \
+    curl -fsS --retry 30 --retry-connrefused --retry-all-errors --retry-delay 1 -X "$method" "$URL$path" \
         -H "Authorization: $auth" \
         -H "Content-Type: application/json" \
         ${body:+--data "$body"}
@@ -286,7 +285,7 @@ urlencode() { python3 -I -c 'import sys, urllib.parse; print(urllib.parse.quote(
 
 configure() {
     local wizard
-    wizard="$(curl -fsS "$URL/System/Info/Public" | python3 -I -c 'import json,sys; print(json.load(sys.stdin).get("StartupWizardCompleted", False))')"
+    wizard="$(curl -fsS --retry 30 --retry-connrefused --retry-all-errors --retry-delay 1 "$URL/System/Info/Public" | python3 -I -c 'import json,sys; print(json.load(sys.stdin).get("StartupWizardCompleted", False))')"
 
     if [[ "$wizard" != "True" ]]; then
         log "Running startup wizard"
@@ -338,7 +337,14 @@ add_library() {
   "EnableChapterImageExtraction":$chapters,
   "ExtractChapterImagesDuringLibraryScan":$chapters,
   "PathInfos":[{"Path":"$path"}],
-  "TypeOptions":[]
+  "EnableEmbeddedTitles":false,
+  "EnableEmbeddedEpisodeInfos":false,
+  "TypeOptions":[
+    {"Type":"Movie","MetadataFetchers":[],"MetadataFetcherOrder":[],"ImageFetchers":[],"ImageFetcherOrder":[]},
+    {"Type":"Series","MetadataFetchers":[],"MetadataFetcherOrder":[],"ImageFetchers":[],"ImageFetcherOrder":[]},
+    {"Type":"Season","MetadataFetchers":[],"MetadataFetcherOrder":[],"ImageFetchers":[],"ImageFetcherOrder":[]},
+    {"Type":"Episode","MetadataFetchers":[],"MetadataFetcherOrder":[],"ImageFetchers":[],"ImageFetcherOrder":[]}
+  ]
 }}
 EOF
     )" >/dev/null
