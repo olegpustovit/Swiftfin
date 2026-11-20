@@ -15,7 +15,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-DERIVED="${DERIVED_DATA:-$ROOT/../DerivedData-device}"
+DERIVED="${DERIVED_DATA:-$ROOT/.build/DerivedData-device}"
 CONFIGURATION="${CONFIGURATION:-Release}"
 
 DEVICE="${1:-}"

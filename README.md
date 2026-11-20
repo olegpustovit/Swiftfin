@@ -21,6 +21,15 @@
   <b>Swiftfin</b> is a modern video client for the <a href="https://github.com/jellyfin/jellyfin">Jellyfin</a> media server.
 </p>
 
+## 📺 Apple TV fork
+
+This fork adds a native Apple TV player and fixes, see [Documentation/appletv-fork.md](Documentation/appletv-fork.md).
+
+```sh
+make setup   # tvOS toolchain, simulator, and a local Jellyfin test server
+make run     # launch in the Apple TV Simulator (sign in to http://localhost:8096 as "demo", no password)
+```
+
 ## ⚡️ Download
 
 <a href="https://apps.apple.com/us/app/swiftfin/id1604098728">

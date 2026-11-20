@@ -107,3 +107,7 @@ XcodeConfig/DevelopmentTeam.xcconfig
 
 # Other
 .idea
+
+# Local tooling (make setup / make run)
+.build/
+.testserver/
