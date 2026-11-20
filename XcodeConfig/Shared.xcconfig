@@ -6,9 +6,9 @@
 // Copyright (c) 2025 Jellyfin & Jellyfin Contributors
 //
 
-// SwiftfinX (Apple TV fork) defaults. Override in the git-ignored DevelopmentTeam.xcconfig to build under another team.
+// Swiftfin X (Apple TV fork) defaults. Override in the git-ignored DevelopmentTeam.xcconfig to build under another team.
 DEVELOPMENT_TEAM = 7ZH3FYV964
-PRODUCT_BUNDLE_IDENTIFIER = com.olehpustovit.swiftfinx
-APP_DISPLAY_NAME = SwiftfinX
+PRODUCT_BUNDLE_IDENTIFIER = com.microapps.swiftfinx
+APP_DISPLAY_NAME = Swiftfin X
 
 #include? "DevelopmentTeam.xcconfig"

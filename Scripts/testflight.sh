@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Archives SwiftfinX for tvOS and uploads it to App Store Connect / TestFlight.
+# Archives Swiftfin X for tvOS and uploads it to App Store Connect / TestFlight.
 #
 # Requirements (one time):
 #   - Xcode > Settings > Accounts: signed in with an Apple ID on team DEVELOPMENT_TEAM (XcodeConfig/Shared.xcconfig)
-#   - App Store Connect > Apps > "+": a tvOS app with the bundle ID PRODUCT_BUNDLE_IDENTIFIER (com.olehpustovit.swiftfinx)
+#   - App Store Connect > Apps > "+": a tvOS app with the bundle ID PRODUCT_BUNDLE_IDENTIFIER (com.microapps.swiftfinx)
 #
 # Optional App Store Connect API key instead of the Xcode account:
 #   ASC_KEY_ID=XXXX ASC_ISSUER_ID=uuid [ASC_KEY_PATH=~/.appstoreconnect/private_keys/AuthKey_XXXX.p8]

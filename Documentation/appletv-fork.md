@@ -70,7 +70,7 @@ In the app, connect to `http://localhost:8096` and sign in as `demo` (no passwor
 
 ## Installing on your Apple TV
 
-The fork builds as **SwiftfinX** (`com.olehpustovit.swiftfinx`, team `7ZH3FYV964`), set in `XcodeConfig/Shared.xcconfig`.
+The fork builds as **Swiftfin X** (`com.microapps.swiftfinx`, team `7ZH3FYV964`), set in `XcodeConfig/Shared.xcconfig`.
 To build under another team, create the git-ignored `XcodeConfig/DevelopmentTeam.xcconfig`:
 
 ```
@@ -86,4 +86,4 @@ PRODUCT_BUNDLE_IDENTIFIER = com.example.swiftfinx
 
 `make testflight` archives a Release build (build number = timestamp) and uploads it to App Store Connect.
 It signs in with the Apple ID in Xcode → Settings → Accounts, or an API key via `ASC_KEY_ID` + `ASC_ISSUER_ID`.
-The app record (tvOS, bundle ID `com.olehpustovit.swiftfinx`) must exist in App Store Connect.
+The app record (tvOS, bundle ID `com.microapps.swiftfinx`) must exist in App Store Connect.
